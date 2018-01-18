@@ -1,6 +1,5 @@
 class Node {
-  constructor(word, definition, prev, next) {
-    this.prev = prev;
+  constructor(word, definition, next) {
     this.next = next;
     this.word = word;
     this.definition = definition;
@@ -9,10 +8,13 @@ class Node {
 
 class LinkedList {
   constructor() {
+    // We'll want to keep track of the head node and
+    // the last node to make adding and subtracting easy
     this.headNode = null;
     this.lastNode = null;
   }
 
+  // Allow initializing the list with a first node
   initialize(firstNode = null) {
     this.headNode = firstNode;
     this.lastNode = firstNode;
@@ -20,25 +22,58 @@ class LinkedList {
 
   // To add the first node
   addFirstNode(word, definition) {
-    this.headNode = new Node(word, definition, null, null);
+    this.headNode = new Node(word, definition, null);
     this.lastNode = this.headNode;
   }
 
   // Add a node to the end of the list
-  addNode(data) {
+  appendNode(word, definition) {
     // If we don't have a headNode yet, that means the list is empty
     // We can treat this case as a `addFirstNode` method
     if (!this.headNode) {
-      this.addFirstHead(data);
+      this.addFirstNode(word, definition);
     } else {
-      const node = new Node(word, definition, null, null);
+      const node = new Node(word, definition, null);
 
       // First, point the last node to our new one
       this.lastNode.next = node;
-      // settign previous node
-      node.prev = this.lastNode;
+
       // Set our new node as the official last node
       this.lastNode = node;
+    }
+  }
+
+  // Insert node to specified index. FINDING NODE IS LINEAR, BUT INSERTING AND CHANGING REFERENCES IS CONSTANT TIME
+  insertNode(word, definition, index) {
+    // If we don't have a headNode yet, that means the list is empty
+    // We can treat this case as a `addFirstNode` method
+    if (!this.headNode) {
+      this.addFirstNode(word, definition);
+    } else {
+      //Find Node
+      // Start at the head
+      let counter = 0;
+      let currentNode = this.headNode;
+      let afterNode = null;
+
+      // Crawl until we hit index
+      while (counter < index) {
+        console.log(counter);
+        currentNode = currentNode.next;
+        ++counter;
+      }
+
+      //Preserve linkage to neighbor
+      afterNode = currentNode.next;
+
+      //Create new node and refer it to the currentNode
+      currentNode.next = new Node(word, definition, null);
+
+      //Reassign newly created Node to be the currentNode
+      currentNode = currentNode.next;
+
+      //Reestablish linkage
+      currentNode.next = afterNode;
     }
   }
 
@@ -97,3 +132,9 @@ class LinkedList {
     }
   }
 }
+
+// const linkedListInitialized.initialize() = new LinkedList();
+const linkedListTest = new LinkedList();
+
+linkedListTest.addFirstNode("Baby", "Justin Bieber");
+linkedListTest.printList();
