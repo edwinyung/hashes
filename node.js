@@ -120,6 +120,54 @@ class LinkedList {
 
   // big o => linear time
 
+  reverse() {
+    let prevNode = null;
+    let currentNode = this.headNode;
+    let nextNode = null;
+    while (currentNode !== null) {
+      nextNode = currentNode.next;
+      currentNode.next = prevNode;
+      prevNode = currentNode;
+      currentNode = nextNode;
+    }
+    this.headNode = prevNode;
+  }
+
+  reverseDraft() {
+    //swap head and last nodes
+    let temp = null;
+    temp = this.headNode;
+    this.headNode = this.lastNode;
+    this.lastNode = temp;
+
+    // jb -> jt -> xtina
+    // xtina -> jt -> jb
+    this.headNode.next = this.lastNode.next;
+    this.lastNode.next = null;
+
+    //initialize at xtina
+    let currentNode = this.headNode;
+
+    //JT -> JF -> xtina
+    let nextNode = null;
+    let afterNode = null;
+    let placeholder = null;
+
+    while (currentNode !== null) {
+      //set up temp vars
+      nextNode = currentNode.next;
+      afterNode = nextNode.next;
+
+      //swap JT and JF. So now JF -> JT
+      placeholder = nextNode;
+      nextNode = currentNode;
+      currentNode = placeholder;
+
+      //set the newly swapped nextNode's reference to be afterNode
+      nextNode.next = afterNode;
+    }
+  }
+
   // Crawls and prints the list
   printList() {
     // Start at the head
@@ -142,5 +190,6 @@ linkedListTest.appendNode("Bringing Sexy Back", "Justin Timberlake");
 linkedListTest.appendNode("Genie in a Bottle", "Christina Aguilera");
 linkedListTest.insertNode("The Artist", "James Franco", 1);
 linkedListTest.removeNode(2);
+linkedListTest.reverse();
 linkedListTest.printList();
 // console.log(linkedListTest);
