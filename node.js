@@ -160,19 +160,6 @@ class LinkedList {
     return counter;
   }
 
-  reverse() {
-    let prevNode = null;
-    let currentNode = this.headNode;
-    let nextNode = null;
-    while (currentNode !== null) {
-      nextNode = currentNode.next;
-      currentNode.next = prevNode;
-      prevNode = currentNode;
-      currentNode = nextNode;
-    }
-    this.headNode = prevNode;
-  }
-
   // Crawls and prints the list
   printList() {
     // Start at the head
