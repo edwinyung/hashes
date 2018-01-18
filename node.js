@@ -119,6 +119,30 @@ class LinkedList {
   }
 
   // big o => linear time
+  // jb -> jt -> xtina
+
+  reverse() {
+    let prevNode = null;
+    let currentNode = this.headNode;
+    let nextNode = null;
+    while (currentNode !== null) {
+      nextNode = currentNode.next;
+      currentNode.next = prevNode;
+      prevNode = currentNode;
+      currentNode = nextNode;
+    }
+    this.headNode = prevNode;
+  }
+
+  countListItems() {
+    // Start at the head
+    let currentNode = this.headNode;
+    let counter = 0;
+    while (currentNode.next !== null) {
+      counter++;
+    }
+    return counter;
+  }
 
   // Crawls and prints the list
   printList() {
@@ -140,7 +164,9 @@ console.log(linkedListTest);
 linkedListTest.addFirstNode("Baby", "Justin Bieber");
 linkedListTest.appendNode("Bringing Sexy Back", "Justin Timberlake");
 linkedListTest.appendNode("Genie in a Bottle", "Christina Aguilera");
-linkedListTest.insertNode("The Artist", "James Franco", 1);
-linkedListTest.removeNode(2);
-linkedListTest.printList();
+// linkedListTest.insertNode("The Artist", "James Franco", 1);
+linkedListTest.reverse();
+// linkedListTest.printList();
 // console.log(linkedListTest);
+
+module.exports = LinkedList;
