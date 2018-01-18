@@ -15,7 +15,7 @@ class LinkedList {
   }
 
   // Allow initializing the list with a first node
-  initialize(firstNode = null) {
+  initialize(firstNode) {
     this.headNode = firstNode;
     this.lastNode = firstNode;
   }
@@ -119,7 +119,24 @@ class LinkedList {
   }
 
   // big o => linear time
+  // jb -> jt -> xtina
 
+  //a, b, c
+  //headnode is a
+
+  //prevNode = null
+  //currentNode is a
+  //nextNode is null
+
+  //nextNode is b
+  //currentNode is still a.
+  //a.next points to null. Made it a tail. tail has next null
+  //prevNode is a.
+  //currentNode is b.
+
+  //in next iteration, b is points to
+
+  //c is where we end the loop
   reverse() {
     let prevNode = null;
     let currentNode = this.headNode;
@@ -133,39 +150,27 @@ class LinkedList {
     this.headNode = prevNode;
   }
 
-  reverseDraft() {
-    //swap head and last nodes
-    let temp = null;
-    temp = this.headNode;
-    this.headNode = this.lastNode;
-    this.lastNode = temp;
-
-    // jb -> jt -> xtina
-    // xtina -> jt -> jb
-    this.headNode.next = this.lastNode.next;
-    this.lastNode.next = null;
-
-    //initialize at xtina
+  countListItems() {
+    // Start at the head
     let currentNode = this.headNode;
-
-    //JT -> JF -> xtina
-    let nextNode = null;
-    let afterNode = null;
-    let placeholder = null;
-
-    while (currentNode !== null) {
-      //set up temp vars
-      nextNode = currentNode.next;
-      afterNode = nextNode.next;
-
-      //swap JT and JF. So now JF -> JT
-      placeholder = nextNode;
-      nextNode = currentNode;
-      currentNode = placeholder;
-
-      //set the newly swapped nextNode's reference to be afterNode
-      nextNode.next = afterNode;
+    let counter = 1;
+    while (currentNode.next !== null) {
+      counter++;
     }
+    return counter;
+  }
+
+  reverse() {
+    let prevNode = null;
+    let currentNode = this.headNode;
+    let nextNode = null;
+    while (currentNode !== null) {
+      nextNode = currentNode.next;
+      currentNode.next = prevNode;
+      prevNode = currentNode;
+      currentNode = nextNode;
+    }
+    this.headNode = prevNode;
   }
 
   // Crawls and prints the list
@@ -188,8 +193,12 @@ console.log(linkedListTest);
 linkedListTest.addFirstNode("Baby", "Justin Bieber");
 linkedListTest.appendNode("Bringing Sexy Back", "Justin Timberlake");
 linkedListTest.appendNode("Genie in a Bottle", "Christina Aguilera");
+
 linkedListTest.insertNode("The Artist", "James Franco", 1);
 linkedListTest.removeNode(2);
 linkedListTest.reverse();
 linkedListTest.printList();
+
 // console.log(linkedListTest);
+
+module.exports = LinkedList;
