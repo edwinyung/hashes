@@ -156,6 +156,7 @@ class LinkedList {
     let counter = 1;
     while (currentNode.next !== null) {
       counter++;
+      currentNode = currentNode.next;
     }
     return counter;
   }
@@ -173,18 +174,18 @@ class LinkedList {
 }
 
 // const linkedListInitialized.initialize() = new LinkedList();
-const linkedListTest = new LinkedList();
+// const linkedListTest = new LinkedList();
 
-console.log("testing");
-console.log(linkedListTest);
-linkedListTest.addFirstNode("Baby", "Justin Bieber");
-linkedListTest.appendNode("Bringing Sexy Back", "Justin Timberlake");
-linkedListTest.appendNode("Genie in a Bottle", "Christina Aguilera");
-
-linkedListTest.insertNode("The Artist", "James Franco", 1);
-linkedListTest.removeNode(2);
-linkedListTest.reverse();
-linkedListTest.printList();
+// console.log("testing");
+// console.log(linkedListTest);
+// linkedListTest.addFirstNode("Baby", "Justin Bieber");
+// linkedListTest.appendNode("Bringing Sexy Back", "Justin Timberlake");
+// linkedListTest.appendNode("Genie in a Bottle", "Christina Aguilera");
+//
+// linkedListTest.insertNode("The Artist", "James Franco", 1);
+// linkedListTest.removeNode(2);
+// linkedListTest.reverse();
+// linkedListTest.printList();
 
 // console.log(linkedListTest);
 
