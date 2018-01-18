@@ -58,7 +58,6 @@ class LinkedList {
 
       // Crawl until we hit index
       while (counter < index) {
-        console.log(counter);
         currentNode = currentNode.next;
         ++counter;
       }
@@ -127,7 +126,7 @@ class LinkedList {
     let currentNode = this.headNode;
 
     while (currentNode.next !== null) {
-      console.log(currentNode.data);
+      console.log("print list => ", currentNode);
       currentNode = currentNode.next;
     }
   }
@@ -136,5 +135,12 @@ class LinkedList {
 // const linkedListInitialized.initialize() = new LinkedList();
 const linkedListTest = new LinkedList();
 
+console.log("testing");
+console.log(linkedListTest);
 linkedListTest.addFirstNode("Baby", "Justin Bieber");
+linkedListTest.appendNode("Bringing Sexy Back", "Justin Timberlake");
+linkedListTest.appendNode("Genie in a Bottle", "Christina Aguilera");
+linkedListTest.insertNode("The Artist", "James Franco", 1);
+linkedListTest.removeNode(2);
 linkedListTest.printList();
+// console.log(linkedListTest);
