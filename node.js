@@ -15,7 +15,7 @@ class LinkedList {
   }
 
   // Allow initializing the list with a first node
-  initialize(firstNode) {
+  initialize(firstNode = null) {
     this.headNode = firstNode;
     this.lastNode = firstNode;
   }
@@ -136,19 +136,98 @@ class LinkedList {
 
   //in next iteration, b is points to
 
-  //c is where we end the loop
+  //The key is that we are not moving any of the blocks. WE ARE JUST REVERSING THEIR REFERENCES
+  //Assume we have a three block linked list
+  //A -> B -> C -> null. C points to null, but null is not a block
+  //After reversal
+  //null <- A <- B <- C
+  //C is the new head node
+
   reverse() {
-    let prevNode = null;
-    let currentNode = this.headNode;
-    let nextNode = null;
+    let previousNode = null; //Since a singly linked list can't point to its prior, we need this variable
+    let currentNode = this.headNode; //Start at head node
     while (currentNode !== null) {
-      nextNode = currentNode.next;
-      currentNode.next = prevNode;
-      prevNode = currentNode;
-      currentNode = nextNode;
+      let nextNode = currentNode.next; //We need a temp variable NextNode to store our next reference
+      currentNode.next = previousNode; //We make the current node point to the previous node
+      //Now, we begin to traverse the current node to the next one
+      previousNode = currentNode; //We update the previous node with our current node
+      currentNode = nextNode; //We update the current node with the next node to prepare for the next iteration
     }
-    this.headNode = prevNode;
+    //We stop the while loop when the currentNode is null (after Block C). The previousNode is Block C, so we have to remember to reassign this.headNode with Block C as it is now the originator of the entire list
+    this.headNode = previousNode;
   }
+
+  // OUTPUT:
+  // currentNode =>  Node {
+  //   next:
+  //    Node {
+  //      next: Node { next: null, word: 'Baby', definition: 'Justin Bieber' },
+  //      word: 'Bringing Sexy Back',
+  //      definition: 'Justin Timberlake' },
+  //   word: 'Genie in a Bottle',
+  //   definition: 'Christina Aguilera' }
+  // currentNode =>  Node {
+  //   next: Node { next: null, word: 'Baby', definition: 'Justin Bieber' },
+  //   word: 'Bringing Sexy Back',
+  //   definition: 'Justin Timberlake' }
+
+  //We pass in the head node first
+  reverseRecursion(currentNode) {
+    let nextNode = currentNode.next; //For code legibility
+    //Base Case: Once we are at the last node's turn, we set the last node's next reference to be null as we expect since it is now the new head node. We then return the last node (the last recursive call returns currentNode)
+    if (currentNode == null || nextNode == null) {
+      return currentNode;
+    }
+    let restOfList = this.reverseRecursion(nextNode); //We store the next node in a temp variable to call it at the return at the end. We will need to store it before invoking the recursion because of the next line where we null the reference. We need to be careful of the next lines not overwriting the memory of this temp variable
+    nextNode.next = currentNode; //Make the next block refer back to the current block
+    currentNode.next = null; //Cancel out this block's next reference
+    return restOfList; //Traverse to the next block. We end at the base case at the end of the linked list when the block points to null
+  }
+
+  //Remember, in recursion, we start popping out the stack at the very end. So the current Node is block B, and we null out its reference. We set C to refer to B.
+  //Then, we set A to refer to null, and B to refer to A.
+  //The order is now this: A <- B <- C, just as we want!
+  //OUTPUT:
+  // ===============================
+  // WE HIT THE BASE CASE HERE
+  // ===============================
+  // CURRENT NODE => Node {
+  //   next: null,
+  //   word: 'Bringing Sexy Back',
+  //   definition: 'Justin Timberlake' }
+  // NEXT NODE =>  Node {
+  //   next:
+  //    Node {
+  //      next: null,
+  //      word: 'Bringing Sexy Back',
+  //      definition: 'Justin Timberlake' },
+  //   word: 'Genie in a Bottle',
+  //   definition: 'Christina Aguilera' }
+  // REST OF LIST => Node {
+  //   next:
+  //    Node {
+  //      next: null,
+  //      word: 'Bringing Sexy Back',
+  //      definition: 'Justin Timberlake' },
+  //   word: 'Genie in a Bottle',
+  //   definition: 'Christina Aguilera' }
+
+  // ===============================
+  // NEXT RECURSIVE CALL
+  // ===============================
+  // CURRENT NODE => Node { next: null, word: 'Baby', definition: 'Justin Bieber' }
+  // NEXT NODE => Node {
+  //   next: Node { next: null, word: 'Baby', definition: 'Justin Bieber' },
+  //   word: 'Bringing Sexy Back',
+  //   definition: 'Justin Timberlake' }
+  // REST OF LIST => Node {
+  //   next:
+  //    Node {
+  //      next: Node { next: null, word: 'Baby', definition: 'Justin Bieber' },
+  //      word: 'Bringing Sexy Back',
+  //      definition: 'Justin Timberlake' },
+  //   word: 'Genie in a Bottle',
+  //   definition: 'Christina Aguilera' }
 
   countListItems() {
     // Start at the head
@@ -173,20 +252,15 @@ class LinkedList {
   }
 }
 
-// const linkedListInitialized.initialize() = new LinkedList();
-// const linkedListTest = new LinkedList();
+const linkedListTest = new LinkedList();
 
-// console.log("testing");
-// console.log(linkedListTest);
-// linkedListTest.addFirstNode("Baby", "Justin Bieber");
-// linkedListTest.appendNode("Bringing Sexy Back", "Justin Timberlake");
-// linkedListTest.appendNode("Genie in a Bottle", "Christina Aguilera");
-//
-// linkedListTest.insertNode("The Artist", "James Franco", 1);
-// linkedListTest.removeNode(2);
-// linkedListTest.reverse();
-// linkedListTest.printList();
-
-// console.log(linkedListTest);
+linkedListTest.addFirstNode("Baby", "Justin Bieber");
+linkedListTest.appendNode("Bringing Sexy Back", "Justin Timberlake");
+linkedListTest.appendNode("Genie in a Bottle", "Christina Aguilera");
+linkedListTest.insertNode("The Artist", "James Franco", 1);
+linkedListTest.removeNode(2);
+linkedListTest.reverse();
+// linkedListTest.reverseRecursion(linkedListTest.findNode(0));
+linkedListTest.printList();
 
 module.exports = LinkedList;
