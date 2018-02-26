@@ -1,3 +1,5 @@
+//http://www.mattzeunert.com/2017/02/01/implementing-a-hash-table-in-javascript.html
+
 const LinkedList = require("./node.js");
 const fs = require("fs");
 var dictionary = JSON.parse(fs.readFileSync("./dictionary.json", "utf8"));
